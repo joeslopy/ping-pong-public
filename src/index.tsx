@@ -1,4 +1,4 @@
-import { ColorModeScript } from "@chakra-ui/react";
+import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -10,6 +10,7 @@ import SignupCard from "./pages/SignupPage";
 import WelcomePage from "./pages/WelcomePage";
 import reportWebVitals from "./reportWebVitals";
 import * as serviceWorker from "./serviceWorker";
+import { theme } from "./theme";
 
 const container = document.getElementById("root");
 if (!container) throw new Error("Failed to find the root element");
@@ -18,17 +19,18 @@ const root = ReactDOM.createRoot(container);
 root.render(
   <React.StrictMode>
     <ColorModeScript />
-
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<WelcomePage />} />
-        <Route path="/leaderboard" element={<LeaderboardPage />} />
-        <Route path="/signup" element={<SignupCard />} />
-        <Route path="/enter-game" element={<EnterGamePage />} />
-        <Route path="/make-admin" element={<MakeAdminPage />} />
-        <Route path="match-history/:id" element={<MatchHistoryPage />} />
-      </Routes>
-    </BrowserRouter>
+    <ChakraProvider theme={theme}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<WelcomePage />} />
+          <Route path="/leaderboard" element={<LeaderboardPage />} />
+          <Route path="/signup" element={<SignupCard />} />
+          <Route path="/enter-game" element={<EnterGamePage />} />
+          <Route path="/make-admin" element={<MakeAdminPage />} />
+          <Route path="match-history/:id" element={<MatchHistoryPage />} />
+        </Routes>
+      </BrowserRouter>
+    </ChakraProvider>
   </React.StrictMode>
 );
 

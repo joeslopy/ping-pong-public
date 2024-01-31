@@ -1,4 +1,4 @@
-import { ChakraProvider, VStack } from "@chakra-ui/react";
+import { VStack } from "@chakra-ui/react";
 import {
   collection,
   getDocs,
@@ -9,15 +9,15 @@ import {
 } from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import {} from "@chakra-ui/react";
 import MatchHistoryCard from "../components/MatchHistoryCard";
-import MatchHistoryComponent from "../components/MatchHistoryComponent";
 import NavBar from "../components/NavBar";
 import { app } from "../firebase";
 import { Player } from "../interfaces";
 import { USER_DB, MATCH_DB } from "../environment";
+import { format, startOfDay } from "date-fns";
 
 export interface MatchHistory {
-  previousDate?: number;
   currentPlayer: string;
   date: number;
   winner: string;
@@ -29,8 +29,17 @@ export interface MatchHistory {
   player?: Player;
 }
 
+export interface MatchHistoryDate {
+  date: number;
+  matchHistroy: MatchHistory[];
+}
+
+type MatchHistoryCache = {
+  [key: string]: MatchHistory[];
+};
+
 export default function MatchHistoryPage() {
-  const [matchList, setMatchList] = useState<MatchHistory[]>();
+  const [matchList, setMatchList] = useState<MatchHistoryDate[]>();
   const [users, setUsers] = useState<Player[]>();
   const [currentUser, setCurrentUser] = useState<Player>();
 
@@ -85,10 +94,13 @@ export default function MatchHistoryPage() {
       collection(db, MATCH_DB),
       where("players", "array-contains", uid)
     );
+
     const usersSnapshot = await getDocs(matchQuery);
     const matchList = usersSnapshot.docs.map((doc) => doc.data());
 
-    let matchArray: MatchHistory[] = [];
+    let matchArray: MatchHistoryDate[] = [];
+
+    let matchCache: MatchHistoryCache = {};
 
     await Promise.all(
       matchList.map(async (matchData, _) => {
@@ -97,8 +109,6 @@ export default function MatchHistoryPage() {
         setCurrentUser(currentPlayer);
 
         const players = matchData.players;
-
-        //  Players array always has length of 2
         const other: string[] = [...players];
         const index = other.indexOf(player);
         other.splice(index, 1);
@@ -117,6 +127,12 @@ export default function MatchHistoryPage() {
 
         const playerInfo = await getUserForUid(otherPlayer);
 
+        const matchDate = new Date(Number(matchData.date["seconds"]) * 1000);
+        // console.log(matchDate, "WHUYYY", matchData.date);
+        const currentDay = startOfDay(matchDate);
+        const startOfDaySeconds = currentDay.getTime();
+        const currDate = startOfDaySeconds.toString();
+
         const match: MatchHistory = {
           currentPlayer: player,
           date: matchData.date["seconds"],
@@ -128,17 +144,33 @@ export default function MatchHistoryPage() {
           oponent: otherPlayer,
           player: playerInfo,
         };
-        matchArray.push(match);
+
+        //letters[char] = 1 + (letters[char] || 0)
+
+        if (matchCache[currDate]) {
+          matchCache[currDate].push(match);
+        } else {
+          matchCache[currDate] = [match];
+        }
+
+        console.log("ADASADDA", currDate, Number(currDate));
       })
     );
 
+    for (let key in matchCache) {
+      const matchHistroyDate: MatchHistoryDate = {
+        date: Number(key),
+        matchHistroy: matchCache[key],
+      };
+      matchArray.push(matchHistroyDate);
+    }
     matchArray.sort((match1, match2) => match2.date - match1.date);
 
     setMatchList(matchArray);
   }
 
   return (
-    <ChakraProvider>
+    <>
       <NavBar />
       <h1 style={{ textAlign: "center", fontSize: 24, fontWeight: 800 }}>
         {currentUser === undefined
@@ -154,18 +186,12 @@ export default function MatchHistoryPage() {
       >
         {matchList?.map((match, index) => (
           <MatchHistoryCard
-            previousDate={matchList[Math.max(index - 1, 0)].date}
+            key={index}
             date={match.date}
-            oponent={match.oponent}
-            outcome={match.score}
-            player={match.player}
-            currentPlayer={match.currentPlayer}
-            eloBefore={match.eloBefore}
-            eloAfter={match.eloAfter}
-            winner={match.winner}
-          ></MatchHistoryCard>
+            matchHistroy={match.matchHistroy}
+          />
         ))}
       </VStack>
-    </ChakraProvider>
+    </>
   );
 }
