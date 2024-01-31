@@ -2,20 +2,28 @@ import { extendTheme } from "@chakra-ui/react";
 
 const breakpoints = {
   xs: "0px",
-  sm: "445px",
-  md: "545px",
+  sm: "390px",
+  md: "768px",
 };
 
 export const theme = extendTheme({
   breakpoints,
   textStyles: {
     lg: {
-      fontSize: ["48px", "72px"],
-      fontWeight: "bold",
+      fontSize: {
+        xs: "12px",
+        sm: "14px",
+        md: "16px",
+      },
+      fontWeight: "semibold",
     },
     "md-title": {
       fontSize: ["14px", "18px"],
       fontWeight: "semibold",
+    },
+    "lg-title": {
+      fontSize: ["18px", "24px"],
+      fontWeight: "black",
     },
     md: {
       fontSize: {
@@ -31,9 +39,9 @@ export const theme = extendTheme({
     },
     xs: {
       fontSize: {
-        xs: "8px",
-        sm: "10px",
-        md: "13px",
+        xs: "10px",
+        sm: "12px",
+        md: "14px",
       },
       fontWeight: "semibold",
     },

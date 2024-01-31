@@ -15,68 +15,34 @@ function MatchHistoryEntry({
   winner,
   player,
 }: MatchHistory) {
-  const [elementWidths, setElementWidths] = useState(new Map<string, number>());
-  const elemetIds = [
-    "match-time",
-    "oponent-name",
-    "outcome",
-    "score",
-    "elo-diff",
-    "elo-after-match",
-  ];
-
-  function getWidthForElement(elementId: string): number | undefined {
-    var element = document.getElementById(elementId);
-    var positionInfo = element?.getBoundingClientRect();
-    var width = positionInfo?.width;
-    return width;
-  }
-
-  useEffect(() => {
-    // initial size calculation
-    handleResize();
-  }, []);
-
-  function handleResize() {
-    for (let elementId of elemetIds) {
-      const elementWidth = getWidthForElement(elementId);
-
-      setElementWidths((map) => new Map(map.set(elementId, elementWidth ?? 0)));
-    }
-  }
-
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-
-    // Clean up the event listener when the component unmounts
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  });
-
   return (
     <Card
-      style={{ justifyContent: "center", display: "flex", padding: "8px" }}
+      style={{
+        justifyContent: "center",
+        display: "flex",
+        padding: "8px",
+        marginTop: "8px",
+        marginBottom: "8px",
+      }}
       height={"60px"}
     >
       <HStack
         style={{
           display: "flex",
           textAlign: "left",
-          padding: "8px",
         }}
       >
-        <Text minW={elementWidths.get(elemetIds[0])} textStyle={"md"}>
+        <Text flex={1} textStyle={"md"}>
           {format(date * 1000, "HH:mm")}
         </Text>
 
-        <Text textStyle={"md"} flex={1} minW={elementWidths.get(elemetIds[1])}>
+        <Text textStyle={"md"} flex={2}>
           {player?.nickName ?? "Mysterious Person"}
         </Text>
 
         <Text
           textStyle={"md"}
-          minW={elementWidths.get(elemetIds[2])}
+          flex={1}
           style={{
             color: winner === currentPlayer ? "green" : "red",
           }}
@@ -84,13 +50,13 @@ function MatchHistoryEntry({
           {winner === currentPlayer ? "W" : "L"}
         </Text>
 
-        <Text minW={elementWidths.get(elemetIds[3])} textStyle={"md"}>
+        <Text flex={1} textStyle={"md"}>
           {score}
         </Text>
 
         <Text
           textStyle={"md"}
-          minW={elementWidths.get(elemetIds[4])}
+          flex={1}
           style={{
             color: eloAfter - eloBefore > 0 ? "green" : "red",
           }}
@@ -99,7 +65,7 @@ function MatchHistoryEntry({
           {eloAfter - eloBefore}
         </Text>
 
-        <Text minW={elementWidths.get(elemetIds[5])} textStyle={"md"}>
+        <Text flex={1} textStyle={"md"}>
           {eloAfter}
         </Text>
       </HStack>
@@ -111,26 +77,6 @@ export default function MatchHistoryCard({
   date,
   matchHistroy,
 }: MatchHistoryDate) {
-  const [fontSize, setFontSize] = useState<number>(18);
-  const [subHeadingFontSize, setSubHeadingFontSize] = useState<number>(12);
-
-  useEffect(() => {
-    function handleResize() {
-      const { innerWidth: width } = window;
-      const fontSize = width >= 375 ? 16 : 12;
-      setFontSize(fontSize);
-      const subHeadingFontSize = width >= 375 ? 12 : 8;
-      setSubHeadingFontSize(subHeadingFontSize);
-    }
-
-    window.addEventListener("resize", handleResize);
-
-    // Clean up the event listener when the component unmounts
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  });
-
   const subHeaderFontWeight = 800;
 
   console.log("WTFFF", date);
@@ -139,25 +85,25 @@ export default function MatchHistoryCard({
   const currDate = format(date, "MMM dd yyyy");
 
   return (
-    <div style={{ whiteSpace: "nowrap" }}>
+    <div>
       <Text textStyle={"md-title"}>{currDate}</Text>
-      <HStack display={"flex"}>
-        <Text id={"match-time"} textStyle={"xs"}>
+      <HStack display={"flex"} style={{ padding: "8px" }}>
+        <Text textStyle={"xs"} flex={1}>
           Match Time
         </Text>{" "}
-        <Text id={"oponent-name"} textStyle={"xs"} flex={1}>
+        <Text textStyle={"xs"} flex={2}>
           Oponent Name
         </Text>{" "}
-        <Text id={"outcome"} textStyle={"xs"}>
+        <Text textStyle={"xs"} flex={1}>
           Outcome
         </Text>{" "}
-        <Text id={"score"} textStyle={"xs"}>
+        <Text textStyle={"xs"} flex={1}>
           Score
         </Text>{" "}
-        <Text id={"elo-diff"} textStyle={"xs"}>
+        <Text textStyle={"xs"} flex={1}>
           Elo Difference
         </Text>{" "}
-        <Text id={"elo-after-match"} textStyle={"xs"}>
+        <Text textStyle={"xs"} flex={1}>
           Elo After Match
         </Text>{" "}
       </HStack>
@@ -165,62 +111,7 @@ export default function MatchHistoryCard({
       {matchHistroy.map((match) => (
         <MatchHistoryEntry {...match} />
       ))}
-
-      {/* {matchHistroy.map((match) => {
-        <MatchHistoryEntry></MatchHistoryEntry>;
-      })} */}
+      <div style={{ height: "24px" }} />
     </div>
   );
-
-  //   <div>
-  //   {prevDate === currDate && previousDate !== date ? null : (
-  //     <>
-  //       <Text fontWeight={600}>{format(date * 1000, "MMM dd yyyy")} </Text>
-
-  //
-  //     </>
-  //   )}
-  //   <Card
-  //     style={{ justifyContent: "center", display: "flex" }}
-  //     height={"60px"}
-  //   >
-  //     <HStack
-  //       style={{
-  //         justifyContent: "space-evenly",
-  //         display: "flex",
-  //         textAlign: "left",
-  //       }}
-  //     >
-  //       <Text style={{ fontSize: fontSize, textAlign: "left" }}>
-  //         {format(date * 1000, "HH:mm")}
-  //       </Text>
-
-  //       <Text style={{ fontSize: fontSize }}>
-  //         {player?.nickName ?? "Mysterious Person"}
-  //       </Text>
-
-  //       <Text
-  //         style={{
-  //           color: winner === currentPlayer ? "green" : "red",
-  //           fontSize: fontSize,
-  //         }}
-  //       >
-  //         {winner === currentPlayer ? "W" : "L"}
-  //       </Text>
-
-  //       <Text style={{ fontSize: fontSize }}>{outcome}</Text>
-
-  //       <Text
-  //         style={{
-  //           color: eloAfter - eloBefore > 0 ? "green" : "red",
-  //           fontSize: fontSize,
-  //         }}
-  //       >
-  //         {eloAfter - eloBefore}
-  //       </Text>
-
-  //       <Text style={{ fontSize: fontSize }}>{eloAfter}</Text>
-  //     </HStack>
-  //   </Card>
-  // </div>
 }

@@ -1,4 +1,4 @@
-import { VStack } from "@chakra-ui/react";
+import { VStack, Text } from "@chakra-ui/react";
 import {
   collection,
   getDocs,
@@ -172,11 +172,11 @@ export default function MatchHistoryPage() {
   return (
     <>
       <NavBar />
-      <h1 style={{ textAlign: "center", fontSize: 24, fontWeight: 800 }}>
+      <Text textStyle={"lg-title"} style={{ textAlign: "center" }}>
         {currentUser === undefined
           ? "Loading..."
           : `${currentUser?.firstName}'s Match History`}
-      </h1>
+      </Text>
 
       <VStack
         alignContent={"center"}
