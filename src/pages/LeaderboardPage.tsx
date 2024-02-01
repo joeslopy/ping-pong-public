@@ -1,4 +1,4 @@
-import { ChakraProvider, VStack } from "@chakra-ui/react";
+import { VStack, Text, HStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import LeaderboardRow, {
   LeaderboardRowProps,
@@ -7,9 +7,10 @@ import LeaderboardRow, {
 import { getFirestore, collection, getDocs } from "firebase/firestore/lite";
 import { app } from "../firebase";
 import NavBar from "../components/NavBar";
-import { MATCH_DB, REDIRECT_URL, USER_DB } from "../environment";
+import { REDIRECT_URL, USER_DB } from "../environment";
+import { Player } from "../interfaces";
 export default function LeaderboardPage() {
-  const [usersData, setUsersData] = useState<any[]>([]);
+  const [usersData, setUsersData] = useState<Player[]>([]);
   useEffect(() => {
     getLeaderboardData();
   }, []);
@@ -28,13 +29,17 @@ export default function LeaderboardPage() {
     const usersCollection = collection(db, USER_DB);
     const usersSnapshot = await getDocs(usersCollection);
     const usersList = usersSnapshot.docs.map((doc) => doc.data());
-    const userArray: any[] = [];
+    const userArray: Player[] = [];
 
     usersList.map((user) => {
-      const leaderboardUser = {
-        name: user.first_name + " " + user.last_name,
+      const leaderboardUser: Player = {
+        firstName: user.first_name,
+        lastName: user.last_name,
+        nickName: user.first_name + " " + user.last_name,
         rating: user.rating,
         uid: user.uid,
+        matches: user.matches,
+        eloMult: user.matches >= 5 ? 1 : 2,
       };
       userArray.push(leaderboardUser);
     });
@@ -47,29 +52,49 @@ export default function LeaderboardPage() {
   }
 
   return (
-    <ChakraProvider>
+    <>
       <NavBar />
       <VStack
         alignContent={"center"}
         align={"stretch"}
-        width={"75%"}
+        width={"90%"}
         margin={"auto"}
+        textAlign={"center"}
       >
-        <div style={{ alignItems: "center" }}>
-          <h1 style={{ textAlign: "center" }}>Leaderboard</h1>
-        </div>
+        <Text textStyle={"lg-title"}>Leaderboard</Text>
 
-        {usersData?.map((userData: LeaderboardRowProps, index) => (
+        <HStack display={"flex"} style={{ paddingLeft: "20px" }}>
+          <Text textAlign={"left"} textStyle={"xs"}>
+            Rank
+          </Text>
+
+          <Text
+            paddingLeft={"56px"}
+            textAlign={"left"}
+            textStyle={"xs"}
+            flex={2}
+          >
+            Name
+          </Text>
+          <Text textAlign={"left"} textStyle={"xs"} flex={1}>
+            Matches Played
+          </Text>
+          <Text textAlign={"left"} textStyle={"xs"} flex={1}>
+            Elo
+          </Text>
+        </HStack>
+        {usersData?.map((userData: Player, index) => (
           <LeaderboardRow
             key={index}
             index={index}
+            matches={userData.matches}
             userTapped={userTapped}
-            name={userData.name}
+            name={userData.nickName}
             rating={userData.rating}
             rank={index + 1}
           />
         ))}
       </VStack>
-    </ChakraProvider>
+    </>
   );
 }

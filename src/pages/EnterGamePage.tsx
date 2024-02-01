@@ -258,97 +258,95 @@ export default function EnterGamePage() {
       width={"75%"}
       margin={"auto"}
     >
-      <ChakraProvider>
-        <NavBar />
-        <h1 style={{ textAlign: "center" }}> Select Players</h1>
-        <HStack>
-          <FormControl>
-            <Select
-              onChange={(e) => {
-                setSelectedPlayer1(users[e.target.selectedIndex]);
-              }}
-            >
-              {users.map((user) => (
-                <option>{user.nickName}</option>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl>
-            <Select
-              onChange={(e) => {
-                setSelectedPlayer2(users[e.target.selectedIndex]);
-              }}
-            >
-              {users.map((user) => (
-                <option>{user.nickName}</option>
-              ))}
-            </Select>
-          </FormControl>
-        </HStack>
+      <NavBar />
+      <h1 style={{ textAlign: "center" }}> Select Players</h1>
+      <HStack>
+        <FormControl>
+          <Select
+            onChange={(e) => {
+              setSelectedPlayer1(users[e.target.selectedIndex]);
+            }}
+          >
+            {users.map((user) => (
+              <option>{user.nickName}</option>
+            ))}
+          </Select>
+        </FormControl>
+        <FormControl>
+          <Select
+            onChange={(e) => {
+              setSelectedPlayer2(users[e.target.selectedIndex]);
+            }}
+          >
+            {users.map((user) => (
+              <option>{user.nickName}</option>
+            ))}
+          </Select>
+        </FormControl>
+      </HStack>
 
-        <HStack>
-          <FormControl>
-            <NumberInput
-              onChange={(e) => {
-                setPlayer1Score(parseInt(e));
-              }}
-              value={player1Score}
-              min={0}
-            >
-              <NumberInputField placeholder="Enter player 1 score" />
-              <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
-              </NumberInputStepper>
-            </NumberInput>
-          </FormControl>
-          <FormControl>
-            <NumberInput
-              onChange={(e) => {
-                setPlayer2Score(parseInt(e));
-              }}
-              value={player2Score}
-              min={0}
-            >
-              <NumberInputField placeholder="Enter player 1 score" />
-              <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
-              </NumberInputStepper>
-            </NumberInput>
-          </FormControl>
-        </HStack>
+      <HStack>
+        <FormControl>
+          <NumberInput
+            onChange={(e) => {
+              setPlayer1Score(parseInt(e));
+            }}
+            value={player1Score}
+            min={0}
+          >
+            <NumberInputField placeholder="Enter player 1 score" />
+            <NumberInputStepper>
+              <NumberIncrementStepper />
+              <NumberDecrementStepper />
+            </NumberInputStepper>
+          </NumberInput>
+        </FormControl>
+        <FormControl>
+          <NumberInput
+            onChange={(e) => {
+              setPlayer2Score(parseInt(e));
+            }}
+            value={player2Score}
+            min={0}
+          >
+            <NumberInputField placeholder="Enter player 1 score" />
+            <NumberInputStepper>
+              <NumberIncrementStepper />
+              <NumberDecrementStepper />
+            </NumberInputStepper>
+          </NumberInput>
+        </FormControl>
+      </HStack>
 
-        {selectedPlayer1 && selectedPlayer2 && team1EloRisk && team2EloRisk ? (
-          <div>
-            <HStack>
-              <p>
-                If player 1 wins they will gain:{" "}
-                {team1EloRisk * selectedPlayer1.eloMult}
-              </p>
-              <p>
-                If player 1 loses they will lose:{" "}
-                {team2EloRisk * selectedPlayer1.eloMult}
-              </p>
-            </HStack>
-            <HStack>
-              <p>
-                If player 2 wins they will gain:{" "}
-                {team2EloRisk * selectedPlayer2.eloMult}
-              </p>
-              <p>
-                If player 2 loses they will lose:{" "}
-                {team1EloRisk * selectedPlayer2.eloMult}
-              </p>
-            </HStack>
-          </div>
-        ) : null}
+      {selectedPlayer1 && selectedPlayer2 && team1EloRisk && team2EloRisk ? (
+        <div>
+          <HStack>
+            <p>
+              If player 1 wins they will gain:{" "}
+              {team1EloRisk * selectedPlayer1.eloMult}
+            </p>
+            <p>
+              If player 1 loses they will lose:{" "}
+              {team2EloRisk * selectedPlayer1.eloMult}
+            </p>
+          </HStack>
+          <HStack>
+            <p>
+              If player 2 wins they will gain:{" "}
+              {team2EloRisk * selectedPlayer2.eloMult}
+            </p>
+            <p>
+              If player 2 loses they will lose:{" "}
+              {team1EloRisk * selectedPlayer2.eloMult}
+            </p>
+          </HStack>
+        </div>
+      ) : null}
 
-        <Button onClick={submitGame}>Submit Game</Button>
-        {error === undefined ? null : (
-          <Text style={{ textAlign: "center", color: "red" }}>{error}</Text>
-        )}
-      </ChakraProvider>
+      <Button onClick={submitGame}>Submit Game</Button>
+      {error === undefined ? null : (
+        <Text style={{ textAlign: "center", color: "red" }}>{error}</Text>
+      )}
     </VStack>
   );
 }
