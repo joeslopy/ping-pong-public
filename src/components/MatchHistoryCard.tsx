@@ -79,8 +79,6 @@ export default function MatchHistoryCard({
 }: MatchHistoryDate) {
   const subHeaderFontWeight = 800;
 
-  console.log("WTFFF", date);
-
   //const prevDate = format((previousDate ?? 0) * 1000, "MMM dd yyyy");
   const currDate = format(date, "MMM dd yyyy");
 

@@ -128,7 +128,6 @@ export default function MatchHistoryPage() {
         const playerInfo = await getUserForUid(otherPlayer);
 
         const matchDate = new Date(Number(matchData.date["seconds"]) * 1000);
-        // console.log(matchDate, "WHUYYY", matchData.date);
         const currentDay = startOfDay(matchDate);
         const startOfDaySeconds = currentDay.getTime();
         const currDate = startOfDaySeconds.toString();
@@ -152,8 +151,6 @@ export default function MatchHistoryPage() {
         } else {
           matchCache[currDate] = [match];
         }
-
-        console.log("ADASADDA", currDate, Number(currDate));
       })
     );
 
