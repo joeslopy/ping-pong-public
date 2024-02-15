@@ -1,0 +1,60 @@
+@font-face {
+    font-family: 'source-sans';
+    font-style: 'extra-light';
+    font-weight: 200;
+    src: local(''),
+         url('./fonts/SourceSans3-ExtraLight.ttf') format('truetype'), 
+  }
+@font-face {
+    font-family: 'source-sans';
+    font-style: light;
+    font-weight: 300;
+    src: local(''),
+         url('./fonts/SourceSans3-Light.ttf') format('truetype'), 
+  }
+
+@font-face {
+    font-family: 'source-sans';
+    font-style: normal;
+    font-weight: 400;
+    src: local(''),
+         url('./fonts/SourceSans3-Regular.ttf') format('truetype'), 
+  }
+  @font-face {
+    font-family: 'source-sans';
+    font-style: medium;
+    font-weight: 500;
+    src: local(''),
+         url('./fonts/SourceSans3-Medium.ttf') format('truetype'), 
+  }
+  @font-face {
+    font-family: 'source-sans';
+    font-style: semibold;
+    font-weight: 600;
+    src: local(''),
+         url('./fonts/SourceSans3-SemiBold.ttf') format('truetype'), 
+  }
+  @font-face {
+    font-family: 'source-sans';
+    font-style: bold;
+    font-weight: 700;
+    src: local(''),
+         url('./fonts/SourceSans3-Bold.ttf') format('truetype'), 
+  }
+
+  @font-face {
+    font-family: 'source-sans';
+    font-style: extrabold;
+    font-weight: 800;
+    src: local(''),
+         url('./fonts/SourceSans3-ExtraBold.ttf') format('truetype'), 
+  }
+  @font-face {
+    font-family: 'source-sans';
+    font-style: black;
+    font-weight: 900;
+    src: local(''),
+         url('./fonts/SourceSans3-Black.ttf') format('truetype'), 
+  }
+
+

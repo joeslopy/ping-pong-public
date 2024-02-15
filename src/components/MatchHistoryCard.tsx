@@ -23,8 +23,10 @@ function MatchHistoryEntry({
         padding: "8px",
         marginTop: "8px",
         marginBottom: "8px",
+        marginLeft: "12px",
+        marginRight: "12px",
       }}
-      height={"60px"}
+      height={"68px"}
     >
       <HStack
         style={{
@@ -85,23 +87,31 @@ export default function MatchHistoryCard({
   return (
     <div>
       <Text textStyle={"md-title"}>{currDate}</Text>
-      <HStack display={"flex"} style={{ padding: "8px" }}>
-        <Text textStyle={"xs"} flex={1}>
+      <HStack
+        display={"flex"}
+        style={{
+          paddingTop: "8px",
+          paddingBottom: "8px",
+          paddingLeft: "20px",
+          paddingRight: "20px",
+        }}
+      >
+        <Text textStyle={"sm"} flex={1}>
           Match Time
         </Text>{" "}
-        <Text textStyle={"xs"} flex={2}>
+        <Text textStyle={"sm"} flex={2}>
           Oponent Name
         </Text>{" "}
-        <Text textStyle={"xs"} flex={1}>
+        <Text textStyle={"sm"} flex={1}>
           Outcome
         </Text>{" "}
-        <Text textStyle={"xs"} flex={1}>
+        <Text textStyle={"sm"} flex={1}>
           Score
         </Text>{" "}
-        <Text textStyle={"xs"} flex={1}>
+        <Text textStyle={"sm"} flex={1}>
           Elo Difference
         </Text>{" "}
-        <Text textStyle={"xs"} flex={1}>
+        <Text textStyle={"sm"} flex={1}>
           Elo After Match
         </Text>{" "}
       </HStack>

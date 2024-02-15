@@ -255,8 +255,8 @@ export default function EnterGamePage() {
     <VStack
       alignContent={"center"}
       align={"stretch"}
-      width={"75%"}
-      margin={"auto"}
+      width={"100%"}
+      margin={"0"}
     >
       <NavBar />
       <h1 style={{ textAlign: "center" }}> Select Players</h1>
