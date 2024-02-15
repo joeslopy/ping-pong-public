@@ -30,9 +30,6 @@ export default function LeaderboardRow({
         marginRight: "32px",
       }}
       maxH={"68px"}
-      maxW={"768px"}
-      borderRadius={"16px"}
-      backgroundColor={"#f3f3f3"}
     >
       <HStack paddingLeft={"20px"} paddingRight={"20px"}>
         <Text paddingRight={"10px"} textStyle={"xl"}>

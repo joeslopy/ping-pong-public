@@ -1,5 +1,6 @@
 import { extendTheme } from "@chakra-ui/react";
 import "./fonts.css";
+import { cardTheme } from "./theme/Card";
 
 const breakpoints = {
   xs: "0px",
@@ -15,6 +16,7 @@ export const bgColor = "#fbfbfb";
 export const theme = extendTheme({
   breakpoints,
   components: {
+    Card: cardTheme,
     Button: {
       sizes: {
         sm: {

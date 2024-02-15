@@ -56,17 +56,24 @@ export default function LeaderboardPage() {
     <Background>
       <NavBar />
       <VStack
-        alignContent={"center"}
+        justifyContent={"center"}
+        alignSelf={"center"}
         align={"stretch"}
+        margin={"auto"}
         width={"100%"}
         textAlign={"center"}
+        display={"flex"}
+        maxW={"768px"}
       >
         <Text textStyle={"lg-title"}>Leaderboard</Text>
 
         <HStack
-          maxW={"1024px"}
+          style={{
+            marginLeft: "32px",
+            marginRight: "32px",
+            paddingLeft: "16px",
+          }}
           display={"flex"}
-          style={{ paddingLeft: "48px" }}
         >
           <Text
             paddingLeft={"56px"}
@@ -79,7 +86,12 @@ export default function LeaderboardPage() {
           <Text textAlign={"left"} textStyle={"md-title"} flex={1}>
             Matches Played
           </Text>
-          <Text textAlign={"left"} textStyle={"md-title"} flex={1}>
+          <Text
+            textAlign={"right"}
+            textStyle={"md-title"}
+            flex={1}
+            paddingRight={"40px"}
+          >
             Elo
           </Text>
         </HStack>
