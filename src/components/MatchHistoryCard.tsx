@@ -86,22 +86,22 @@ export default function MatchHistoryCard({
     <div>
       <Text textStyle={"md-title"}>{currDate}</Text>
       <HStack display={"flex"} style={{ padding: "8px" }}>
-        <Text textStyle={"xs"} flex={1}>
+        <Text textStyle={"sm"} flex={1}>
           Match Time
         </Text>{" "}
-        <Text textStyle={"xs"} flex={2}>
+        <Text textStyle={"sm"} flex={2}>
           Oponent Name
         </Text>{" "}
         <Text textStyle={"xs"} flex={1}>
           Outcome
         </Text>{" "}
-        <Text textStyle={"xs"} flex={1}>
+        <Text textStyle={"sm"} flex={1}>
           Score
         </Text>{" "}
-        <Text textStyle={"xs"} flex={1}>
+        <Text textStyle={"sm"} flex={1}>
           Elo Difference
         </Text>{" "}
-        <Text textStyle={"xs"} flex={1}>
+        <Text textStyle={"sm"} flex={1}>
           Elo After Match
         </Text>{" "}
       </HStack>

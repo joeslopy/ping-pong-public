@@ -10,8 +10,9 @@ import SignupCard from "./pages/SignupPage";
 import WelcomePage from "./pages/WelcomePage";
 import reportWebVitals from "./reportWebVitals";
 import * as serviceWorker from "./serviceWorker";
-import { theme } from "./theme";
+import { bgColor, theme } from "./theme";
 
+document.body.style.backgroundColor = bgColor;
 const container = document.getElementById("root");
 if (!container) throw new Error("Failed to find the root element");
 const root = ReactDOM.createRoot(container);

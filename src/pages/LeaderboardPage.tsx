@@ -9,6 +9,7 @@ import { app } from "../firebase";
 import NavBar from "../components/NavBar";
 import { REDIRECT_URL, USER_DB } from "../environment";
 import { Player } from "../interfaces";
+import Background from "../components/Background";
 export default function LeaderboardPage() {
   const [usersData, setUsersData] = useState<Player[]>([]);
   useEffect(() => {
@@ -52,34 +53,33 @@ export default function LeaderboardPage() {
   }
 
   return (
-    <>
+    <Background>
       <NavBar />
       <VStack
         alignContent={"center"}
         align={"stretch"}
-        width={"90%"}
-        margin={"auto"}
+        width={"100%"}
         textAlign={"center"}
       >
         <Text textStyle={"lg-title"}>Leaderboard</Text>
 
-        <HStack display={"flex"} style={{ paddingLeft: "20px" }}>
-          <Text textAlign={"left"} textStyle={"xs"}>
-            Rank
-          </Text>
-
+        <HStack
+          maxW={"1024px"}
+          display={"flex"}
+          style={{ paddingLeft: "48px" }}
+        >
           <Text
             paddingLeft={"56px"}
             textAlign={"left"}
-            textStyle={"xs"}
+            textStyle={"md-title"}
             flex={2}
           >
-            Name
+            Player
           </Text>
-          <Text textAlign={"left"} textStyle={"xs"} flex={1}>
+          <Text textAlign={"left"} textStyle={"md-title"} flex={1}>
             Matches Played
           </Text>
-          <Text textAlign={"left"} textStyle={"xs"} flex={1}>
+          <Text textAlign={"left"} textStyle={"md-title"} flex={1}>
             Elo
           </Text>
         </HStack>
@@ -95,6 +95,6 @@ export default function LeaderboardPage() {
           />
         ))}
       </VStack>
-    </>
+    </Background>
   );
 }
