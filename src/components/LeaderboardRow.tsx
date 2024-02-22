@@ -1,7 +1,7 @@
 import { Avatar, Button, Card, HStack, Text, VStack } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { FaHistory } from "react-icons/fa";
-import { gradient, screenWidth } from "../theme";
+import { gradient, gradientHover, screenWidth } from "../theme";
 
 export interface LeaderboardRowProps {
   name: string;
@@ -84,6 +84,7 @@ export default function LeaderboardRow({
             size={"sm"}
             onClick={() => userTapped(index)}
             maxW={"116px"}
+            _hover={{ backgroundImage: gradientHover }}
           >
             View Match History
           </Button>

@@ -64,6 +64,7 @@ export default function LeaderboardPage() {
         textAlign={"center"}
         display={"flex"}
         maxW={"768px"}
+        py={12}
       >
         <Text textStyle={"lg-title"}>Leaderboard</Text>
 

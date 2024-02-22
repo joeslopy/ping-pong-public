@@ -15,7 +15,8 @@ const breakpoints = {
   md: screenWidth.md,
 };
 
-export const gradient = "linear-gradient(to right, #eb1b2e, purple)";
+export const gradient = "linear-gradient(to right, #eb1b2e, #a020F0)";
+export const gradientHover = "linear-gradient(to right, #eb3b2e, #a040f0)";
 export const bgColor = "#fbfbfb";
 
 export const theme = extendTheme({
@@ -46,8 +47,12 @@ export const theme = extendTheme({
       fontFamily: fontFamily,
     },
     "lg-title": {
-      fontSize: ["18px", "24px"],
-      fontWeight: "black",
+      fontSize: {
+        xs: "xl",
+        sm: "2xl",
+        md: "4xl",
+      },
+      fontWeight: "bold",
       fontFamily: fontFamily,
     },
     nav: {

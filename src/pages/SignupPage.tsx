@@ -21,6 +21,8 @@ import { app } from "../firebase";
 import { REDIRECT_URL, USER_DB } from "../environment";
 
 import { doc, getFirestore, setDoc } from "firebase/firestore";
+import { gradient, gradientHover } from "../theme";
+import NavBar from "../components/NavBar";
 
 export default function SignupCard() {
   const [showPassword, setShowPassword] = useState(false);
@@ -57,20 +59,27 @@ export default function SignupCard() {
   }
 
   return (
-    <ChakraProvider>
+    <>
+      <NavBar />
       <Flex
-        minH={"100vh"}
+        minH={"100%"}
         align={"center"}
         justify={"center"}
         bg={useColorModeValue("gray.50", "gray.800")}
       >
         <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
           <Stack align={"center"}>
-            <Heading fontSize={"4xl"} textAlign={"center"}>
+            <Text textStyle={"lg-title"} textAlign={"center"}>
               Sign up
-            </Heading>
-            <Text fontSize={"lg"} color={"gray.600"}>
-              to enjoy all of our cool features ✌️
+            </Text>
+            <Text
+              paddingLeft={[8, 8, 0, 0]}
+              paddingRight={[8, 8, 0, 0]}
+              textStyle={"lg"}
+              textAlign={"center"}
+              color={"gray.600"}
+            >
+              to enter your ping-pong games and view your history
             </Text>
           </Stack>
           <Box
@@ -134,10 +143,10 @@ export default function SignupCard() {
                 <Button
                   loadingText="Submitting"
                   size="lg"
-                  bg={"blue.400"}
+                  backgroundImage={gradient}
                   color={"white"}
                   _hover={{
-                    bg: "blue.500",
+                    backgroundImage: gradientHover,
                   }}
                   onClick={submitTapped}
                 >
@@ -148,6 +157,6 @@ export default function SignupCard() {
           </Box>
         </Stack>
       </Flex>
-    </ChakraProvider>
+    </>
   );
 }

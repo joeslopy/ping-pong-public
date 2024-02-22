@@ -178,7 +178,7 @@ export default function MatchHistoryPage() {
       <VStack
         alignContent={"center"}
         align={"stretch"}
-        width={"90%"}
+        maxW={"768px"}
         margin={"auto"}
       >
         {matchList?.map((match, index) => (
