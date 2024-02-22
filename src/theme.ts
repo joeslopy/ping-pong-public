@@ -2,15 +2,21 @@ import { extendTheme } from "@chakra-ui/react";
 import "./fonts.css";
 import { cardTheme } from "./theme/Card";
 
-const breakpoints = {
-  xs: "0px",
-  sm: "390px",
+const fontFamily = "source-sans";
+export const screenWidth = {
   md: "768px",
+  sm: "390px",
+  xs: "0px",
 };
 
-const fontFamily = "source-sans";
+const breakpoints = {
+  xs: screenWidth.xs,
+  sm: screenWidth.sm,
+  md: screenWidth.md,
+};
 
-export const gradient = "linear-gradient(to right, #eb1b2e, purple)";
+export const gradient = "linear-gradient(to right, #eb1b2e, #a020F0)";
+export const gradientHover = "linear-gradient(to right, #eb3b2e, #a040f0)";
 export const bgColor = "#fbfbfb";
 
 export const theme = extendTheme({
@@ -32,13 +38,21 @@ export const theme = extendTheme({
 
   textStyles: {
     "md-title": {
-      fontSize: ["14px", "18px"],
+      fontSize: {
+        xs: "14px",
+        sm: "16px",
+        md: "18px",
+      },
       fontWeight: "semibold",
       fontFamily: fontFamily,
     },
     "lg-title": {
-      fontSize: ["18px", "24px"],
-      fontWeight: "black",
+      fontSize: {
+        xs: "xl",
+        sm: "2xl",
+        md: "4xl",
+      },
+      fontWeight: "bold",
       fontFamily: fontFamily,
     },
     nav: {
