@@ -2,13 +2,18 @@ import { extendTheme } from "@chakra-ui/react";
 import "./fonts.css";
 import { cardTheme } from "./theme/Card";
 
-const breakpoints = {
-  xs: "0px",
-  sm: "390px",
+const fontFamily = "source-sans";
+export const screenWidth = {
   md: "768px",
+  sm: "390px",
+  xs: "0px",
 };
 
-const fontFamily = "source-sans";
+const breakpoints = {
+  xs: screenWidth.xs,
+  sm: screenWidth.sm,
+  md: screenWidth.md,
+};
 
 export const gradient = "linear-gradient(to right, #eb1b2e, purple)";
 export const bgColor = "#fbfbfb";
@@ -32,7 +37,11 @@ export const theme = extendTheme({
 
   textStyles: {
     "md-title": {
-      fontSize: ["14px", "18px"],
+      fontSize: {
+        xs: "14px",
+        sm: "16px",
+        md: "18px",
+      },
       fontWeight: "semibold",
       fontFamily: fontFamily,
     },

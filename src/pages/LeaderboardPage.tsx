@@ -69,8 +69,6 @@ export default function LeaderboardPage() {
 
         <HStack
           style={{
-            marginLeft: "32px",
-            marginRight: "32px",
             paddingLeft: "16px",
           }}
           display={"flex"}
@@ -79,7 +77,7 @@ export default function LeaderboardPage() {
             paddingLeft={"56px"}
             textAlign={"left"}
             textStyle={"md-title"}
-            flex={2}
+            flex={1.5}
           >
             Player
           </Text>
