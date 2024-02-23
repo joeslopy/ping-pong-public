@@ -26,7 +26,7 @@ function MatchHistoryEntry({
         marginLeft: "12px",
         marginRight: "12px",
       }}
-      height={"56px"}
+      height={"68px"}
     >
       <HStack
         style={{
@@ -34,7 +34,7 @@ function MatchHistoryEntry({
           textAlign: "left",
         }}
       >
-        <Text flex={1} textStyle={"md"}>
+        <Text textAlign={"center"} flex={1} textStyle={"md"}>
           {format(date * 1000, "HH:mm")}
         </Text>
 
@@ -80,13 +80,10 @@ export default function MatchHistoryCard({
   matchHistroy,
 }: MatchHistoryDate) {
   const currDate = format(date, "MMM dd yyyy");
-  matchHistroy.sort((match1, match2) => match2.date - match1.date);
 
   return (
     <div>
-      <Text paddingLeft={"20px"} textStyle={"md-title"}>
-        {currDate}
-      </Text>
+      <Text textStyle={"md-title"}>{currDate}</Text>
       <HStack
         display={"flex"}
         style={{
@@ -96,7 +93,7 @@ export default function MatchHistoryCard({
           paddingRight: "20px",
         }}
       >
-        <Text textStyle={"sm"} flex={1}>
+        <Text textAlign={"center"} textStyle={"sm"} flex={1}>
           Match Time
         </Text>{" "}
         <Text textStyle={"sm"} flex={2}>

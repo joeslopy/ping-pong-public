@@ -11,6 +11,7 @@ import {
 import { app } from "../firebase";
 import { MATCH_DB, USER_DB } from "../environment";
 import {
+  Box,
   Button,
   ChakraProvider,
   FormControl,
@@ -28,6 +29,7 @@ import { uuidv4 } from "@firebase/util";
 import NavBar from "../components/NavBar";
 import { DocumentData } from "firebase/firestore";
 import { Player } from "../interfaces";
+import { gradient, gradientHover, screenWidth } from "../theme";
 
 export default function EnterGamePage() {
   const [users, setUsers] = useState<Player[]>([]);
@@ -42,6 +44,20 @@ export default function EnterGamePage() {
   const [team2EloRisk, setTeam2EloRisk] = useState<number>();
 
   const [error, setError] = useState<string>();
+
+  const [w, setScreenWidth] = useState(window.innerWidth);
+
+  const handleResize = () => {
+    setScreenWidth(window.innerWidth);
+  };
+
+  // create an event listener
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  });
 
   useEffect(() => {
     getUsersFromFB();
@@ -252,101 +268,120 @@ export default function EnterGamePage() {
   }
 
   return (
-    <VStack
-      alignContent={"center"}
-      align={"stretch"}
-      width={"100%"}
-      margin={"0"}
-    >
+    <>
       <NavBar />
-      <h1 style={{ textAlign: "center" }}> Select Players</h1>
-      <HStack>
-        <FormControl>
-          <Select
-            onChange={(e) => {
-              setSelectedPlayer1(users[e.target.selectedIndex]);
-            }}
-          >
-            {users.map((user) => (
-              <option>{user.nickName}</option>
-            ))}
-          </Select>
-        </FormControl>
-        <FormControl>
-          <Select
-            onChange={(e) => {
-              setSelectedPlayer2(users[e.target.selectedIndex]);
-            }}
-          >
-            {users.map((user) => (
-              <option>{user.nickName}</option>
-            ))}
-          </Select>
-        </FormControl>
-      </HStack>
+      <VStack
+        margin={"auto"}
+        alignContent={"center"}
+        align={"stretch"}
+        maxW={screenWidth.md}
+        display={"flex"}
+        style={{
+          height: `calc(100vh - ${w < parseInt(screenWidth.sm) ? 100 : 100}px)`,
+        }}
+        paddingLeft={"16px"}
+        paddingRight={"16px"}
+        paddingTop={12}
+      >
+        <h1 style={{ textAlign: "center" }}> Select Players</h1>
+        <HStack>
+          <FormControl>
+            <Select
+              onChange={(e) => {
+                setSelectedPlayer1(users[e.target.selectedIndex]);
+              }}
+            >
+              {users.map((user) => (
+                <option>{user.nickName}</option>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl>
+            <Select
+              onChange={(e) => {
+                setSelectedPlayer2(users[e.target.selectedIndex]);
+              }}
+            >
+              {users.map((user) => (
+                <option>{user.nickName}</option>
+              ))}
+            </Select>
+          </FormControl>
+        </HStack>
 
-      <HStack>
-        <FormControl>
-          <NumberInput
-            onChange={(e) => {
-              setPlayer1Score(parseInt(e));
-            }}
-            value={player1Score}
-            min={0}
-          >
-            <NumberInputField placeholder="Enter player 1 score" />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
-        </FormControl>
-        <FormControl>
-          <NumberInput
-            onChange={(e) => {
-              setPlayer2Score(parseInt(e));
-            }}
-            value={player2Score}
-            min={0}
-          >
-            <NumberInputField placeholder="Enter player 1 score" />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
-        </FormControl>
-      </HStack>
+        <HStack>
+          <FormControl>
+            <NumberInput
+              onChange={(e) => {
+                setPlayer1Score(parseInt(e));
+              }}
+              value={player1Score}
+              min={0}
+            >
+              <NumberInputField placeholder="Enter player 1 score" />
+              <NumberInputStepper>
+                <NumberIncrementStepper />
+                <NumberDecrementStepper />
+              </NumberInputStepper>
+            </NumberInput>
+          </FormControl>
+          <FormControl>
+            <NumberInput
+              onChange={(e) => {
+                setPlayer2Score(parseInt(e));
+              }}
+              value={player2Score}
+              min={0}
+            >
+              <NumberInputField placeholder="Enter player 1 score" />
+              <NumberInputStepper>
+                <NumberIncrementStepper />
+                <NumberDecrementStepper />
+              </NumberInputStepper>
+            </NumberInput>
+          </FormControl>
+        </HStack>
 
-      {selectedPlayer1 && selectedPlayer2 && team1EloRisk && team2EloRisk ? (
-        <div>
-          <HStack>
-            <p>
-              If player 1 wins they will gain:{" "}
-              {team1EloRisk * selectedPlayer1.eloMult}
-            </p>
-            <p>
-              If player 1 loses they will lose:{" "}
-              {team2EloRisk * selectedPlayer1.eloMult}
-            </p>
-          </HStack>
-          <HStack>
-            <p>
-              If player 2 wins they will gain:{" "}
-              {team2EloRisk * selectedPlayer2.eloMult}
-            </p>
-            <p>
-              If player 2 loses they will lose:{" "}
-              {team1EloRisk * selectedPlayer2.eloMult}
-            </p>
-          </HStack>
-        </div>
-      ) : null}
+        {selectedPlayer1 && selectedPlayer2 && team1EloRisk && team2EloRisk ? (
+          <div>
+            <HStack>
+              <p>
+                If player 1 wins they will gain:{" "}
+                {team1EloRisk * selectedPlayer1.eloMult}
+              </p>
+              <p>
+                If player 1 loses they will lose:{" "}
+                {team2EloRisk * selectedPlayer1.eloMult}
+              </p>
+            </HStack>
+            <HStack>
+              <p>
+                If player 2 wins they will gain:{" "}
+                {team2EloRisk * selectedPlayer2.eloMult}
+              </p>
+              <p>
+                If player 2 loses they will lose:{" "}
+                {team1EloRisk * selectedPlayer2.eloMult}
+              </p>
+            </HStack>
+          </div>
+        ) : null}
+        <Box flex={1}></Box>
 
-      <Button onClick={submitGame}>Submit Game</Button>
-      {error === undefined ? null : (
-        <Text style={{ textAlign: "center", color: "red" }}>{error}</Text>
-      )}
-    </VStack>
+        <Button
+          h={"48px"}
+          color={"white"}
+          backgroundImage={gradient}
+          _hover={{ backgroundImage: gradientHover }}
+          onClick={submitGame}
+          style={{ marginBottom: "16px" }}
+        >
+          Submit Game
+        </Button>
+        {error === undefined ? null : (
+          <Text style={{ textAlign: "center", color: "red" }}>{error}</Text>
+        )}
+      </VStack>
+    </>
   );
 }

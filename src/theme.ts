@@ -5,7 +5,7 @@ import { cardTheme } from "./theme/Card";
 const fontFamily = "source-sans";
 export const screenWidth = {
   md: "768px",
-  sm: "390px",
+  sm: "480px",
   xs: "0px",
 };
 
