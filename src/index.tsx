@@ -11,6 +11,7 @@ import WelcomePage from "./pages/WelcomePage";
 import reportWebVitals from "./reportWebVitals";
 import * as serviceWorker from "./serviceWorker";
 import { bgColor, theme } from "./theme";
+import SignInPage from "./pages/SigninPage";
 
 document.body.style.backgroundColor = bgColor;
 const container = document.getElementById("root");
@@ -26,6 +27,7 @@ root.render(
           <Route path="/" element={<WelcomePage />} />
           <Route path="/leaderboard" element={<LeaderboardPage />} />
           <Route path="/signup" element={<SignupCard />} />
+          <Route path="/sign-in" element={<SignInPage />} />
           <Route path="/enter-game" element={<EnterGamePage />} />
           <Route path="/make-admin" element={<MakeAdminPage />} />
           <Route path="match-history/:id" element={<MatchHistoryPage />} />
