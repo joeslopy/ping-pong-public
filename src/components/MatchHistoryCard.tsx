@@ -21,8 +21,8 @@ function MatchHistoryEntry({
         justifyContent: "center",
         display: "flex",
         padding: "8px",
-        marginTop: "8px",
-        marginBottom: "8px",
+        marginTop: "16px",
+        marginBottom: "16px",
         marginLeft: "12px",
         marginRight: "12px",
       }}

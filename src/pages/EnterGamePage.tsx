@@ -121,8 +121,6 @@ export default function EnterGamePage() {
     }
   }
 
-  function setPlayers(data: DocumentData[]) {}
-
   function calculateElo(rating1: number, rating2: number) {
     const diff = (rating1 - rating2) / 1000;
 
@@ -137,8 +135,8 @@ export default function EnterGamePage() {
     if (
       selectedPlayer1 &&
       selectedPlayer2 &&
-      player1Score &&
-      player2Score &&
+      player1Score != undefined &&
+      player2Score != undefined &&
       (player1Score >= 11 || player2Score >= 11) &&
       Math.abs(player1Score - player2Score) >= 2
     ) {
@@ -283,7 +281,9 @@ export default function EnterGamePage() {
         paddingRight={"16px"}
         paddingTop={12}
       >
-        <h1 style={{ textAlign: "center" }}> Select Players</h1>
+        <Text textAlign={"center"} textStyle={"lg-title"}>
+          Select Players
+        </Text>
         <HStack>
           <FormControl>
             <Select
@@ -307,6 +307,43 @@ export default function EnterGamePage() {
               ))}
             </Select>
           </FormControl>
+        </HStack>
+        <HStack style={{ display: "flex", width: "100%" }}>
+          {selectedPlayer1 &&
+          selectedPlayer2 &&
+          team1EloRisk &&
+          team2EloRisk ? (
+            <Box display={"flex"} flexBasis={"row"} width={"100%"}>
+              <Box paddingLeft={"8px"} flex={1}>
+                <HStack>
+                  <VStack>
+                    <Text textStyle={"md"}>
+                      Elo to gain if {selectedPlayer1.firstName} wins:{" "}
+                      {team1EloRisk * selectedPlayer1.eloMult}
+                    </Text>
+                    <Text textStyle={"md"}>
+                      Elo at risk if {selectedPlayer1.firstName} loses:{" "}
+                      {team2EloRisk * selectedPlayer1.eloMult}
+                    </Text>
+                  </VStack>
+                </HStack>
+              </Box>
+              <Box paddingLeft={"8px"} flex={1}>
+                <HStack>
+                  <VStack>
+                    <Text textStyle={"md"}>
+                      Elo to gain if {selectedPlayer2.firstName} wins:{" "}
+                      {team2EloRisk * selectedPlayer2.eloMult}
+                    </Text>
+                    <Text textStyle={"md"}>
+                      Elo at risk if {selectedPlayer2.firstName} loses:{" "}
+                      {team1EloRisk * selectedPlayer2.eloMult}
+                    </Text>
+                  </VStack>
+                </HStack>
+              </Box>
+            </Box>
+          ) : null}
         </HStack>
 
         <HStack>
@@ -341,31 +378,6 @@ export default function EnterGamePage() {
             </NumberInput>
           </FormControl>
         </HStack>
-
-        {selectedPlayer1 && selectedPlayer2 && team1EloRisk && team2EloRisk ? (
-          <div>
-            <HStack>
-              <p>
-                If player 1 wins they will gain:{" "}
-                {team1EloRisk * selectedPlayer1.eloMult}
-              </p>
-              <p>
-                If player 1 loses they will lose:{" "}
-                {team2EloRisk * selectedPlayer1.eloMult}
-              </p>
-            </HStack>
-            <HStack>
-              <p>
-                If player 2 wins they will gain:{" "}
-                {team2EloRisk * selectedPlayer2.eloMult}
-              </p>
-              <p>
-                If player 2 loses they will lose:{" "}
-                {team1EloRisk * selectedPlayer2.eloMult}
-              </p>
-            </HStack>
-          </div>
-        ) : null}
         <Box flex={1}></Box>
 
         <Button
