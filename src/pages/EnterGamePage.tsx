@@ -199,35 +199,44 @@ export default function EnterGamePage() {
         const winnerRating = winner.rating + winnerEloGained;
         const loserRating = loser.rating - loserEloLost;
 
-        await setDoc(
-          doc(db, USER_DB, winner.uid),
-          {
-            rating: winnerRating,
-            matches: increment(1),
-          },
-          { merge: true }
-        );
-        await setDoc(
-          doc(db, USER_DB, loser.uid),
-          {
-            rating: loserRating,
-            matches: increment(1),
-          },
-          { merge: true }
-        );
-        const uid = uuidv4();
-        const winnerUid = winner.uid as string;
-        const loserUid = loser.uid as string;
-        await setDoc(doc(db, MATCH_DB, uid), {
-          date: new Date(),
-          players: [winner.uid, loser.uid],
-          score: {
-            [winnerUid]: ratings.winnerScore,
-            [loserUid]: ratings.loserScore,
-          },
-          elo_before: { [winnerUid]: winner.rating, [loserUid]: loser.rating },
-          elo_after: { [winnerUid]: winnerRating, [loserUid]: loserRating },
-        });
+        try {
+          await setDoc(
+            doc(db, USER_DB, winner.uid),
+            {
+              rating: winnerRating,
+              matches: increment(1),
+            },
+            { merge: true }
+          );
+          await setDoc(
+            doc(db, USER_DB, loser.uid),
+            {
+              rating: loserRating,
+              matches: increment(1),
+            },
+            { merge: true }
+          );
+
+          const uid = uuidv4();
+          const winnerUid = winner.uid as string;
+          const loserUid = loser.uid as string;
+          await setDoc(doc(db, MATCH_DB, uid), {
+            date: new Date(),
+            players: [winner.uid, loser.uid],
+            score: {
+              [winnerUid]: ratings.winnerScore,
+              [loserUid]: ratings.loserScore,
+            },
+            elo_before: {
+              [winnerUid]: winner.rating,
+              [loserUid]: loser.rating,
+            },
+            elo_after: { [winnerUid]: winnerRating, [loserUid]: loserRating },
+          });
+        } catch {
+          setError("Must be signed in to enter game");
+          return;
+        }
 
         setPlayer1Score(0);
         setPlayer2Score(0);
@@ -379,7 +388,9 @@ export default function EnterGamePage() {
           </FormControl>
         </HStack>
         <Box flex={1}></Box>
-
+        {error === undefined ? null : (
+          <Text style={{ textAlign: "center", color: "red" }}>{error}</Text>
+        )}
         <Button
           h={"48px"}
           color={"white"}
@@ -390,9 +401,6 @@ export default function EnterGamePage() {
         >
           Submit Game
         </Button>
-        {error === undefined ? null : (
-          <Text style={{ textAlign: "center", color: "red" }}>{error}</Text>
-        )}
       </VStack>
     </>
   );

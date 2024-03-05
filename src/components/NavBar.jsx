@@ -31,7 +31,6 @@ const NavBar = (props) => {
     auth.onAuthStateChanged((user) => {
       if (user) {
         user.getIdTokenResult().then((result) => {});
-        console.log("WTF???", user);
 
         setIsLoggedIn(true);
       } else {

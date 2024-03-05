@@ -30,32 +30,41 @@ export default function SignupCard() {
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
 
   async function submitTapped() {
+    setSubmitted(true);
+    if (firstName === "" || email == "" || password === "") {
+      setError("Please enter required fields");
+      return;
+    }
     const firebaseApp = app;
     const auth = getAuth();
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(async (userCredential) => {
-        const db = getFirestore(app);
 
-        const uid = userCredential.user.uid;
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const db = getFirestore(app);
 
-        await setDoc(doc(db, USER_DB, uid), {
-          uid,
-          first_name: firstName,
-          last_name: lastName,
-          rating: 3000,
-          doubles_rating: 3000,
-          matches: 0,
-        });
+      const uid = userCredential.user.uid;
 
-        window.location.href = `${REDIRECT_URL}/leaderboard`;
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ..
+      await setDoc(doc(db, USER_DB, uid), {
+        uid,
+        first_name: firstName,
+        last_name: lastName,
+        rating: 3000,
+        doubles_rating: 3000,
+        matches: 0,
       });
+
+      window.location.href = `${REDIRECT_URL}/leaderboard`;
+    } catch {
+      setError("Unable to create account. Must use valid company email.");
+    }
   }
 
   return (
@@ -94,6 +103,8 @@ export default function SignupCard() {
                   <FormControl id="firstName" isRequired>
                     <FormLabel>First Name</FormLabel>
                     <Input
+                      isInvalid={firstName === "" && submitted}
+                      errorBorderColor="crimson"
                       type="text"
                       onChange={(e) => setFirstName(e.target.value)}
                     />
@@ -112,6 +123,8 @@ export default function SignupCard() {
               <FormControl id="email" isRequired>
                 <FormLabel>Email address</FormLabel>
                 <Input
+                  isInvalid={email === "" && submitted}
+                  errorBorderColor="crimson"
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
@@ -122,6 +135,8 @@ export default function SignupCard() {
                 <FormLabel>Password</FormLabel>
                 <InputGroup>
                   <Input
+                    isInvalid={password === "" && submitted}
+                    errorBorderColor="crimson"
                     onChange={(e) => {
                       setPassword(e.target.value);
                     }}
@@ -140,6 +155,11 @@ export default function SignupCard() {
                 </InputGroup>
               </FormControl>
               <Stack spacing={10} pt={2}>
+                {error == "" ? null : (
+                  <Text textStyle={"md"} color={"red"}>
+                    {error}
+                  </Text>
+                )}
                 <Button
                   loadingText="Submitting"
                   size="lg"
