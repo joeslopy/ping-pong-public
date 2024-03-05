@@ -131,7 +131,7 @@ export default function SignInPage() {
                       setErrorMessage("");
                     })
                     .catch((error) => {
-                      setErrorMessage("Please enter valid email address");
+                      setErrorMessage(`Password reset link sent to ${email}`);
                     });
                 }}
               >
